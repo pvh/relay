@@ -3,14 +3,14 @@ import express from 'express'
 import expressWs from 'express-ws'
 import { Server as HttpServer, Socket } from 'net'
 import WebSocket from 'ws'
-import pkg from '../package.json'
+// import pkg from '../package.json'
 import { deduplicate } from './deduplicate'
 import { EventEmitter } from './EventEmitter'
 import { intersection } from './intersection'
 import { pipeSockets } from './pipeSockets'
 import { ConnectRequestParams, DocumentId, Message, UserName } from './types'
 
-const { version } = pkg
+const version  = 1
 
 const { app } = expressWs(express())
 

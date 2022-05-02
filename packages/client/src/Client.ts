@@ -1,7 +1,6 @@
 import debug, { Debugger } from 'debug'
 import { EventEmitter } from './EventEmitter'
-import { isReady } from './isReady'
-import { newid } from './newid'
+import { uuid } from 'uuid'
 import { ClientOptions, DocumentId, Message, PeerSocketMap, UserName } from './types'
 import pkg from '../package.json'
 
@@ -59,7 +58,7 @@ export class Client extends EventEmitter {
   /** Is the connection to the server currently open? */
   public open: boolean
 
-  public log: Debugger
+  public _log: Debugger
 
   private serverConnection: WebSocket
 
@@ -78,7 +77,7 @@ export class Client extends EventEmitter {
    * @param documentIds one or more document IDs that you're interested in
    */
   constructor({
-    userName = newid(),
+    userName = uuid(),
     url,
     documentIds = [],
     minRetryDelay = 10,
@@ -308,3 +307,11 @@ export class Client extends EventEmitter {
     }
   }
 }
+
+/* Util functions */
+const pause = (t = 100) => new Promise<void>(resolve => setTimeout(() => resolve(), t))
+const isReady = async (socket: WebSocket) =>
+  new Promise<void>(async (resolve, reject) => {
+    while (socket.readyState !== WebSocket.OPEN) await pause(100)
+    resolve()
+  })

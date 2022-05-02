@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "es5",
+    "target": "ESNext",
     "useUnknownInCatchVariables": false
   },
   "exclude": ["*.test.ts"],
